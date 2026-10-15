@@ -1,0 +1,593 @@
+/* ============================================================
+   ARCHIVE — Nigeria's Creative History
+   Stylesheet
+   ============================================================ */
+
+/* ── Custom Properties ────────────────────────────────────── */
+:root {
+  color-scheme: dark;
+  --ink:    #0d0b08;
+  --ink2:   #181510;
+  --paper:  #efe5cf;
+  --dim:    #a89d86;
+  --red:    #ff4a1c;
+  --green:  #1f9e57;
+  --gold:   #e9b32f;
+  --line:   #2e2920;
+  box-sizing: border-box;
+  padding-top:    env(safe-area-inset-top,    0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ── Reset ────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/* ── Base ─────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font: 16px/1.55 "IBM Plex Mono", ui-monospace, monospace;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+}
+
+/* ── Utility Classes ──────────────────────────────────────── */
+
+/* Display / Anton typeface */
+.d {
+  font-family: Anton, Impact, "Arial Narrow", sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  line-height: .88;
+  letter-spacing: -.01em;
+}
+
+/* Serif / italic */
+.s {
+  font-family: Fraunces, Georgia, serif;
+  font-style: italic;
+}
+
+/* Small label / tag */
+.tag {
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* ── Button ───────────────────────────────────────────────── */
+.btn {
+  display: inline-block;
+  background: var(--red);
+  color: var(--ink);
+  padding: 12px 22px;
+  border: 0;
+  font: 500 12px "IBM Plex Mono", monospace;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: var(--paper);
+}
+
+/* ── Navigation ───────────────────────────────────────────── */
+nav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 5vw;
+  background: rgba(13, 11, 8, .88);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+
+nav b {
+  font-family: Anton, Impact, sans-serif;
+  font-size: 22px;
+  letter-spacing: .06em;
+  font-weight: 400;
+}
+
+nav div {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: var(--red);
+}
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  padding: 8vh 5vw 5vh;
+  min-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(64px, 17vw, 250px);
+}
+
+.hero h1 span {
+  display: block;
+}
+
+.hero h1 .o {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--paper);
+}
+
+.hero h1 .r {
+  color: var(--red);
+}
+
+.hero .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 36px;
+}
+
+.hero p {
+  max-width: 440px;
+  margin: 0;
+  font-size: clamp(20px, 2.4vw, 28px);
+  line-height: 1.25;
+}
+
+/* ── Stamp (rotating badge) ───────────────────────────────── */
+.stamp {
+  position: absolute;
+  right: 5vw;
+  top: 9vh;
+  width: clamp(90px, 13vw, 160px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px dashed var(--gold);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  animation: sp 30s linear infinite;
+}
+
+@keyframes sp {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Marquee ──────────────────────────────────────────────── */
+.mq {
+  border-block: 1px solid var(--line);
+  background: var(--red);
+  color: var(--ink);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.mq div {
+  display: inline-block;
+  padding: 10px 0;
+  animation: mq 40s linear infinite;
+  font-size: 13px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+@keyframes mq {
+  to { transform: translateX(-50%); }
+}
+
+/* ── Sections ─────────────────────────────────────────────── */
+section {
+  padding: 12vh 5vw;
+}
+
+h2 {
+  font-size: clamp(44px, 8vw, 120px);
+  margin: 10px 0 30px;
+}
+
+/* ── Rooms ────────────────────────────────────────────────── */
+.rooms {
+  display: flex;
+  gap: 10px;
+  height: 72vh;
+  min-height: 520px;
+}
+
+.room {
+  position: relative;
+  flex: 1;
+  border: 1px solid var(--line);
+  background: var(--ink2);
+  overflow: hidden;
+  cursor: pointer;
+  text-align: left;
+  color: var(--paper);
+  padding: 0;
+  font: inherit;
+  transition: flex .6s cubic-bezier(.7, 0, .2, 1);
+}
+
+.room.on {
+  flex: 3.2;
+  cursor: default;
+}
+
+/* Room artwork layer — covers the full room panel */
+.art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: .9;
+  transition: transform .8s;
+}
+
+.room:not(.on):hover .art {
+  transform: scale(1.08);
+}
+
+/* Room info overlay */
+.room .in {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 22px;
+  background: linear-gradient(transparent, rgba(13, 11, 8, .92) 40%);
+}
+
+.room .n {
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  font-size: 12px;
+  letter-spacing: .14em;
+  color: var(--paper);
+}
+
+.room h3 {
+  margin: 0;
+  font-size: clamp(34px, 4.4vw, 64px);
+}
+
+/* Expanded room description */
+.room .more {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .6s;
+  opacity: .95;
+}
+
+.room.on .more {
+  max-height: 260px;
+}
+
+.room .more p {
+  margin: 12px 0 0;
+  max-width: 420px;
+  font-size: 14px;
+}
+
+/* Collapsed room — vertical title */
+.room:not(.on) h3 {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  margin-left: -.5em;
+}
+
+.room:not(.on) .in {
+  background: none;
+}
+
+
+
+/* ── Filter Chips ─────────────────────────────────────────── */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 34px;
+}
+
+.chip {
+  background: none;
+  border: 1px solid var(--dim);
+  color: var(--paper);
+  padding: 9px 16px;
+  font: 500 12px "IBM Plex Mono", monospace;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--paper);
+}
+
+/* ── Timeline ─────────────────────────────────────────────── */
+.tl {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.tl li {
+  display: grid;
+  grid-template-columns: minmax(90px, 170px) 1fr minmax(90px, 140px);
+  gap: 20px;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: baseline;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: .7s;
+}
+
+.tl li.v {
+  opacity: 1;
+  transform: none;
+}
+
+.tl li:hover .yr {
+  color: var(--red);
+}
+
+.yr {
+  font-size: clamp(40px, 6vw, 86px);
+  transition: color .2s;
+}
+
+.tl h4 {
+  margin: 0 0 4px;
+  font: 600 clamp(20px, 2.4vw, 30px)/1.15 Fraunces, Georgia, serif;
+  font-style: italic;
+}
+
+.tl p {
+  margin: 0;
+  color: var(--dim);
+  font-size: 14px;
+  max-width: 560px;
+}
+
+.dis {
+  text-align: right;
+}
+
+.dis i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+/* ── Pull a Record ────────────────────────────────────────── */
+.pull {
+  background: var(--paper);
+  color: var(--ink);
+  text-align: center;
+}
+
+.pull .tag {
+  color: #6b624f;
+}
+
+.card {
+  max-width: 720px;
+  margin: 36px auto;
+  border: 2px solid var(--ink);
+  padding: 36px 28px;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  background: #f6eedb;
+}
+
+.card .yr {
+  color: var(--red);
+}
+
+.card h4 {
+  margin: 0;
+  font: 600 clamp(24px, 3.4vw, 40px)/1.1 Fraunces, Georgia, serif;
+  font-style: italic;
+}
+
+.card p {
+  margin: 0;
+}
+
+.pull .btn {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.pull .btn:hover {
+  background: var(--red);
+  color: var(--ink);
+}
+
+/* ── Footer ───────────────────────────────────────────────── */
+footer {
+  padding: 12vh 5vw 6vh;
+}
+
+footer h2 {
+  margin-top: 0;
+}
+
+footer .g {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: 60px;
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+}
+
+/* ── Plates (illustration grid) ───────────────────────────── */
+.pl {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.pl figure {
+  margin: 0;
+  background: var(--ink2);
+  border: 1px solid var(--line);
+  padding: 12px 12px 16px;
+  transition: transform .4s;
+}
+
+.pl figure:hover {
+  transform: rotate(-1.2deg) translateY(-6px);
+}
+
+.pl img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: center;
+  filter: sepia(.35) contrast(1.05);
+}
+
+.pl figcaption {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--dim);
+}
+
+.pl figcaption b {
+  display: block;
+  color: var(--paper);
+  font: 600 19px/1.2 Fraunces, Georgia, serif;
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 760px) {
+  /* Plates — horizontal scroll on mobile */
+  .pl {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 14px;
+    padding-bottom: 12px;
+  }
+
+  .pl figure {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
+  }
+
+  /* Timeline — single column */
+  .dis {
+    text-align: left;
+  }
+
+  .tl li {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  /* Nav — hide text links, keep CTA */
+  nav div a:not(.btn) {
+    display: none;
+  }
+
+  /* Rooms — stack vertically */
+  .rooms {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .room {
+    flex: none;
+    height: 92px;
+    transition: height .6s;
+  }
+
+  .room.on {
+    height: 480px;
+  }
+
+  .room:not(.on) h3 {
+    writing-mode: initial;
+    transform: none;
+    position: static;
+    margin: 0;
+    font-size: 34px;
+  }
+
+  .room:not(.on) .in {
+    padding: 30px 18px;
+  }
+
+  /* Hide rotating stamp */
+  .stamp {
+    display: none;
+  }
+}
+
+/* ── Accessibility: reduced motion ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

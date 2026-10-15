@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ARCHIVE — Nigeria's Creative History</title>
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,wght@1,400;1,600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- ══════════════════════════════════════════════════════
+       NAV
+  ══════════════════════════════════════════════════════ -->
+  <nav>
+    <b>ARCHIVE©</b>
+    <div>
+      <a href="#rooms">Rooms</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#plates">Plates</a>
+      <a href="#pull">Pull a record</a>
+      <a class="btn" href="#give">Contribute</a>
+    </div>
+  </nav>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════════════════ -->
+  <header class="hero">
+
+    <div class="stamp">Est. 1960<br>Lagos ✦ Abuja<br>Open always</div>
+
+    <h1 class="d">
+      <span>The past</span>
+      <span class="o">is not</span>
+      <span class="r">past.</span>
+    </h1>
+
+    <div class="row">
+      <p class="s">
+        A digital museum of Nigerian photography, music, fashion and design.
+        Everything your parents kept in a drawer, put where you can find it.
+      </p>
+      <a class="btn" href="#rooms">Enter the collection ↓</a>
+    </div>
+
+  </header>
+
+  <!-- Marquee ticker -->
+  <div class="mq"><div id="mq"></div></div>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       ROOMS
+       Thumbnail URLs use Wikimedia's /thumb/ CDN endpoint:
+       .../commons/thumb/{a}/{ab}/File.jpg/{width}px-File.jpg
+       This avoids the rate-limiting that hits full originals.
+  ══════════════════════════════════════════════════════ -->
+  <section id="rooms">
+    <span class="tag">Four rooms · One country</span>
+    <h2 class="d">Choose a room</h2>
+
+    <div class="rooms" id="rm">
+
+      <!-- Room 01 — Photography -->
+      <button class="room on" data-k="photo">
+        <img
+          class="art"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/1910s_Lagos_Nigeria_by_H_Hunting_of_Paterson_Zochonis_4554747024_University_of_Toronto.jpg/800px-1910s_Lagos_Nigeria_by_H_Hunting_of_Paterson_Zochonis_4554747024_University_of_Toronto.jpg"
+          alt="Early Lagos street scene, 1910s, Nigeria">
+        <span class="n">01</span>
+        <div class="in">
+          <h3 class="d">Photography</h3>
+          <div class="more">
+            <p class="s">
+              Studio portraits, street frames, and J.D. 'Okhai Ojeikere's decades-long
+              catalogue of hairstyles as sculpture. Nigeria has always looked at itself closely.
+            </p>
+          </div>
+        </div>
+      </button>
+
+      <!-- Room 02 — Music -->
+      <button class="room" data-k="music">
+        <img
+          class="art"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/New_Afrika_Shrine%2C_Lagos_Ikeja%2C_Nigeria_1.jpg/800px-New_Afrika_Shrine%2C_Lagos_Ikeja%2C_Nigeria_1.jpg"
+          alt="The New Afrika Shrine, Lagos, Nigeria">
+        <span class="n">02</span>
+        <div class="in">
+          <h3 class="d">Music</h3>
+          <div class="more">
+            <p class="s">
+              From highlife dance halls to Fela's Afrika Shrine, juju, fuji and the global
+              rise of Afrobeats. Press play on seventy years of Lagos noise.
+            </p>
+          </div>
+        </div>
+      </button>
+
+      <!-- Room 03 — Fashion -->
+      <button class="room" data-k="fashion">
+        <img
+          class="art"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Adire_Selection.jpg/800px-Adire_Selection.jpg"
+          alt="Adire indigo fabric selection, Yoruba, Nigeria">
+        <span class="n">03</span>
+        <div class="in">
+          <h3 class="d">Fashion</h3>
+          <div class="more">
+            <p class="s">
+              Adire indigo, aso-oke, and the tailors who made a nation's wardrobe,
+              from Shade Thomas-Fahm's boutique to Lagos runways.
+            </p>
+          </div>
+        </div>
+      </button>
+
+      <!-- Room 04 — Design -->
+      <button class="room" data-k="design">
+        <img
+          class="art"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/The_Magestic_National_theater_Lagos.jpg/800px-The_Magestic_National_theater_Lagos.jpg"
+          alt="The National Theatre, Lagos, Nigeria">
+        <span class="n">04</span>
+        <div class="in">
+          <h3 class="d">Design</h3>
+          <div class="more">
+            <p class="s">
+              A flag drawn by a student, buildings by Demas Nwoko, posters and typography.
+              Form that argued for the country it came from.
+            </p>
+          </div>
+        </div>
+      </button>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       TIMELINE
+  ══════════════════════════════════════════════════════ -->
+  <section id="timeline" style="background:var(--ink2)">
+    <span class="tag">Accession log</span>
+    <h2 class="d">Seven decades<br>on the record</h2>
+    <div class="chips" id="ch"></div>
+    <ol class="tl" id="tl"></ol>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       PLATES
+  ══════════════════════════════════════════════════════ -->
+  <section id="plates">
+    <span class="tag">Plates · photographs from the record</span>
+    <h2 class="d">From the<br>photo drawer</h2>
+
+    <div class="pl">
+
+      <!-- Plate 1 — Independence flag -->
+      <figure>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/800px-Flag_of_Nigeria.svg.png"
+          alt="The Nigerian flag — green, white, green — hoisted at independence 1960">
+        <figcaption>
+          <b>The flag goes up</b>
+          1 October 1960 — the green-white-green takes the sky at independence.
+        </figcaption>
+      </figure>
+
+      <!-- Plate 2 — Lagos from above -->
+      <figure>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Ikoyi%2C_Lagos%2C_Nigeria.jpg/800px-Ikoyi%2C_Lagos%2C_Nigeria.jpg"
+          alt="Aerial view of Ikoyi, Lagos, Nigeria">
+        <figcaption>
+          <b>Marina, mid-century</b>
+          Lagos from above — a city rising fast toward its own future.
+        </figcaption>
+      </figure>
+
+      <!-- Plate 3 — Fela / Afrika Shrine -->
+      <figure>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Fela_New_Shrine%2C_Lagos_02.jpg/800px-Fela_New_Shrine%2C_Lagos_02.jpg"
+          alt="The New Afrika Shrine, Lagos — home of Fela Kuti's Afrobeat">
+        <figcaption>
+          <b>Horns up at the Shrine</b>
+          The New Afrika Shrine, Lagos — where Fela turned music into resistance.
+        </figcaption>
+      </figure>
+
+      <!-- Plate 4 — Adire cloth -->
+      <figure>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Adire_Selection.jpg/800px-Adire_Selection.jpg"
+          alt="Selection of adire indigo-dyed cloth, Yoruba, Nigeria">
+        <figcaption>
+          <b>The tailor's window</b>
+          Adire — indigo resist-dyed cloth that dressed a continent.
+        </figcaption>
+      </figure>
+
+      <!-- Plate 5 — Nok terracotta -->
+      <figure>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Erected_Nok_Terracotta.jpg/800px-Erected_Nok_Terracotta.jpg"
+          alt="Erected Nok terracotta sculpture, Nigeria">
+        <figcaption>
+          <b>Nok head</b>
+          Terracotta tradition — over two thousand years of Nigerian sculptural genius.
+        </figcaption>
+      </figure>
+
+      <!-- Plate 6 — Nok face / hair as architecture -->
+      <figure>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Nok_face_sculpture.jpg/800px-Nok_face_sculpture.jpg"
+          alt="Nok face sculpture at the Kaduna museum gallery, Nigeria">
+        <figcaption>
+          <b>Hair as architecture</b>
+          An homage to the sculptural hairstyles documented across Nigeria by Ojeikere.
+        </figcaption>
+      </figure>
+
+    </div>
+
+    <p class="tag" style="margin-top:26px">
+      Images sourced from Wikimedia Commons under free / CC licences.
+      Swap in higher-resolution or licensed photographs as the collection grows.
+    </p>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       PULL A RECORD
+  ══════════════════════════════════════════════════════ -->
+  <section class="pull" id="pull">
+    <span class="tag">Random access</span>
+    <h2 class="d" style="margin-bottom:0">Pull a record</h2>
+    <div class="card" id="card" aria-live="polite"></div>
+    <button class="btn" id="pb">Pull another ↻</button>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       FOOTER / CONTRIBUTE
+  ══════════════════════════════════════════════════════ -->
+  <footer id="give">
+    <span class="tag">Thehttps://www.istockphoto.com/photos/nigerian-history-photos collection is incomplete</span>
+
+    <h2 class="d">
+      Your drawer<br>
+      <span style="color:var(--red)">is an archive.</span>
+    </h2>
+
+    <p class="s" style="font-size:clamp(20px,2.4vw,28px); max-width:640px">
+      Wedding photographs, cassette sleeves, a tailor's pattern book, an old poster.
+      Send us what survived and we will keep it for the next generation.
+    </p>
+
+    <a class="btn" href="mailto:hello@archive.example?subject=Contribution">
+      Contribute a record
+    </a>
+
+    <div class="g tag">
+      <span>ARCHIVE© — a fictional museum</span>
+      <span>Documenting Nigeria's creative history</span>
+      <span><a href="#" onclick="scrollTo({top:0}); return false;">Back to top ↑</a></span>
+    </div>
+  </footer>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       SCRIPTS
+  ══════════════════════════════════════════════════════ -->
+  <script src="main.js"></script>
+
+</body>
+</html>
