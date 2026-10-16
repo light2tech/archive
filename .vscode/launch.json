@@ -27,7 +27,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Open ARCHIVE — Nigeria's Creative History.html",
-            "file": "c:\\Users\\CLAUDIUS SAMUEL\\Desktop\\archive\\ARCHIVE — Nigeria's Creative History.html"
+            "file": "c:\\Users\\CLAUDIUS SAMUEL\\Desktop\\archive\\index.html"
         }
     ]
 }
