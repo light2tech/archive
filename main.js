@@ -1,13 +1,3 @@
-/* ============================================================
-   ARCHIVE — Nigeria's Creative History
-   Main Script
-   ============================================================ */
-
-/* ── Data ─────────────────────────────────────────────────── */
-
-/**
- * Category metadata  →  [label, accent colour]
- */
 const CATEGORIES = {
   photo:   ["Photography", "#ff4a1c"],
   music:   ["Music",       "#e9b32f"],
@@ -15,9 +5,6 @@ const CATEGORIES = {
   design:  ["Design",      "#1f9e57"],
 };
 
-/**
- * Timeline entries  →  [decade, category, title, description]
- */
 const ENTRIES = [
   [
     "1950s", "music",
@@ -76,20 +63,13 @@ const ENTRIES = [
   ],
 ];
 
-/* ── Helpers ──────────────────────────────────────────────── */
-
-/** Shorthand querySelector */
 const $ = (selector) => document.querySelector(selector);
-
-/* ── Marquee ──────────────────────────────────────────────── */
 
 function initMarquee() {
   const text = "Photography ✦ Music ✦ Fashion ✦ Design ✦ 1950 → Now ✦ " +
                "Lagos ✦ Ibadan ✦ Kano ✦ Enugu ✦ Port Harcourt ✦ Abuja ✦ ";
   $("#mq").innerHTML = text.repeat(2);
 }
-
-/* ── Rooms ────────────────────────────────────────────────── */
 
 function initRooms() {
   document.querySelectorAll(".room").forEach((room) => {
@@ -99,8 +79,6 @@ function initRooms() {
     });
   });
 }
-
-/* ── Filter Chips ─────────────────────────────────────────── */
 
 function buildChips() {
   const entries = [["all", "All"], ...Object.entries(CATEGORIES).map(([k, v]) => [k, v[0]])];
@@ -112,9 +90,6 @@ function buildChips() {
     .join("");
 }
 
-/* ── Timeline ─────────────────────────────────────────────── */
-
-// IntersectionObserver — fade rows in as they scroll into view
 const rowObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -167,8 +142,6 @@ function initTimeline() {
   });
 }
 
-/* ── Pull a Record ────────────────────────────────────────── */
-
 function initPullRecord() {
   let lastIndex = -1;
 
@@ -190,10 +163,8 @@ function initPullRecord() {
   }
 
   $("#pb").addEventListener("click", pull);
-  pull(); // show one on load
+  pull();
 }
-
-/* ── Init ─────────────────────────────────────────────────── */
 
 document.addEventListener("DOMContentLoaded", () => {
   initMarquee();

@@ -6,22 +6,349 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>ARCHIVE — Nigeria's Creative History</title>
 
-  <!-- Google Fonts -->
   <link
     href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,wght@1,400;1,600&family=IBM+Plex+Mono:wght@400;500&display=swap"
     rel="stylesheet">
 
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink:   #0d0b08;
+      --ink2:  #181510;
+      --paper: #efe5cf;
+      --dim:   #a89d86;
+      --red:   #ff4a1c;
+      --green: #1f9e57;
+      --gold:  #e9b32f;
+      --line:  #2e2920;
+      box-sizing: border-box;
+      padding-top:    env(safe-area-inset-top,    0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    *, *::before, *::after { box-sizing: inherit; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+
+    body {
+      margin: 0;
+      background: var(--ink);
+      color: var(--paper);
+      font: 16px/1.55 "IBM Plex Mono", ui-monospace, monospace;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; }
+
+    .d {
+      font-family: Anton, Impact, "Arial Narrow", sans-serif;
+      text-transform: uppercase;
+      font-weight: 400;
+      line-height: .88;
+      letter-spacing: -.01em;
+    }
+    .s  { font-family: Fraunces, Georgia, serif; font-style: italic; }
+    .tag {
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--red);
+      color: var(--ink);
+      padding: 12px 22px;
+      border: 0;
+      font: 500 12px "IBM Plex Mono", monospace;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn:hover { background: var(--paper); }
+
+    nav {
+      position: sticky;
+      top: env(safe-area-inset-top, 0px);
+      z-index: 9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 5vw;
+      background: rgba(13,11,8,.88);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    nav b { font-family: Anton, Impact, sans-serif; font-size: 22px; letter-spacing: .06em; font-weight: 400; }
+    nav div { display: flex; gap: 22px; align-items: center; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+    nav a { text-decoration: none; }
+    nav a:hover { color: var(--red); }
+
+    .hero {
+      position: relative;
+      padding: 8vh 5vw 5vh;
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+    .hero h1 { margin: 0; font-size: clamp(64px,17vw,250px); }
+    .hero h1 span { display: block; }
+    .hero h1 .o { color: transparent; -webkit-text-stroke: 2px var(--paper); }
+    .hero h1 .r { color: var(--red); }
+    .hero .row { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: flex-end; margin-top: 36px; }
+    .hero p { max-width: 440px; margin: 0; font-size: clamp(20px,2.4vw,28px); line-height: 1.25; }
+
+    .stamp {
+      position: absolute;
+      right: 5vw; top: 9vh;
+      width: clamp(90px,13vw,160px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 2px dashed var(--gold);
+      display: grid; place-items: center;
+      text-align: center;
+      color: var(--gold);
+      font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+      animation: sp 30s linear infinite;
+    }
+    @keyframes sp { to { transform: rotate(360deg); } }
+
+    .mq {
+      border-block: 1px solid var(--line);
+      background: var(--red);
+      color: var(--ink);
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .mq div {
+      display: inline-block;
+      padding: 10px 0;
+      animation: mq 40s linear infinite;
+      font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
+    }
+    @keyframes mq { to { transform: translateX(-50%); } }
+
+    section { padding: 12vh 5vw; }
+    h2 { font-size: clamp(44px,8vw,120px); margin: 10px 0 30px; }
+
+    .rooms { display: flex; gap: 10px; height: 72vh; min-height: 520px; }
+
+    .room {
+      position: relative;
+      flex: 1;
+      border: 1px solid var(--line);
+      background: var(--ink2);
+      overflow: hidden;
+      cursor: pointer;
+      text-align: left;
+      color: var(--paper);
+      padding: 0;
+      font: inherit;
+      transition: flex .6s cubic-bezier(.7,0,.2,1);
+    }
+    .room.on { flex: 3.2; cursor: default; }
+
+    .art {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: .85;
+      transition: transform .8s;
+    }
+    .room:not(.on):hover .art { transform: scale(1.08); }
+
+    .room .in {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 22px;
+      background: linear-gradient(transparent, rgba(13,11,8,.92) 40%);
+    }
+    .room .n { position: absolute; top: 16px; left: 18px; font-size: 12px; letter-spacing: .14em; color: var(--paper); }
+    .room h3 { margin: 0; font-size: clamp(34px,4.4vw,64px); }
+
+    .room .more { max-height: 0; overflow: hidden; transition: max-height .6s; opacity: .95; }
+    .room.on .more { max-height: 260px; }
+    .room .more p { margin: 12px 0 0; max-width: 420px; font-size: 14px; }
+
+    .room:not(.on) h3 {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      position: absolute;
+      bottom: 22px; left: 50%;
+      margin-left: -.5em;
+    }
+    .room:not(.on) .in { background: none; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 34px; }
+    .chip {
+      background: none;
+      border: 1px solid var(--dim);
+      color: var(--paper);
+      padding: 9px 16px;
+      font: 500 12px "IBM Plex Mono", monospace;
+      letter-spacing: .1em; text-transform: uppercase;
+      cursor: pointer;
+    }
+    .chip[aria-pressed="true"] { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+
+    .tl { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+    .tl li {
+      display: grid;
+      grid-template-columns: minmax(90px,170px) 1fr minmax(90px,140px);
+      gap: 20px; padding: 26px 0;
+      border-bottom: 1px solid var(--line);
+      align-items: baseline;
+      opacity: 0; transform: translateY(24px);
+      transition: .7s;
+    }
+    .tl li.v  { opacity: 1; transform: none; }
+    .tl li:hover .yr { color: var(--red); }
+    .yr { font-size: clamp(40px,6vw,86px); transition: color .2s; }
+    .tl h4 { margin: 0 0 4px; font: 600 clamp(20px,2.4vw,30px)/1.15 Fraunces,Georgia,serif; font-style: italic; }
+    .tl p  { margin: 0; color: var(--dim); font-size: 14px; max-width: 560px; }
+    .dis   { text-align: right; }
+    .dis i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 8px; }
+
+    .pull { background: var(--paper); color: var(--ink); text-align: center; }
+    .pull .tag { color: #6b624f; }
+    .card {
+      max-width: 720px; margin: 36px auto;
+      border: 2px solid var(--ink);
+      padding: 36px 28px; min-height: 260px;
+      display: flex; flex-direction: column; justify-content: center; gap: 12px;
+      background: #f6eedb;
+    }
+    .card .yr { color: var(--red); }
+    .card h4  { margin: 0; font: 600 clamp(24px,3.4vw,40px)/1.1 Fraunces,Georgia,serif; font-style: italic; }
+    .card p   { margin: 0; }
+    .pull .btn { background: var(--ink); color: var(--paper); }
+    .pull .btn:hover { background: var(--red); color: var(--ink); }
+
+    footer { padding: 12vh 5vw 6vh; }
+    footer h2 { margin-top: 0; }
+    footer .g {
+      display: flex; flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px; margin-top: 60px;
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+    }
+
+    .pl { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .pl figure {
+      margin: 0;
+      background: var(--ink2);
+      border: 1px solid var(--line);
+      padding: 12px 12px 16px;
+      transition: transform .4s;
+    }
+    .pl figure:hover { transform: rotate(-1.2deg) translateY(-6px); }
+    .pl img {
+      display: block;
+      width: 100%; height: 220px;
+      object-fit: cover; object-position: center;
+      filter: sepia(.35) contrast(1.05);
+    }
+    .pl figcaption { margin-top: 12px; font-size: 12px; color: var(--dim); }
+    .pl figcaption b {
+      display: block;
+      color: var(--paper);
+      font: 600 19px/1.2 Fraunces,Georgia,serif;
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+
+    @media (max-width: 760px) {
+      .pl { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 14px; padding-bottom: 12px; }
+      .pl figure { flex: 0 0 78%; scroll-snap-align: start; }
+      .dis { text-align: left; }
+      .tl li { grid-template-columns: 1fr; gap: 6px; }
+      nav div a:not(.btn) { display: none; }
+      .rooms { flex-direction: column; height: auto; }
+      .room  { flex: none; height: 92px; transition: height .6s; }
+      .room.on { height: 480px; }
+      .room:not(.on) h3 { writing-mode: initial; transform: none; position: static; margin: 0; font-size: 34px; }
+      .room:not(.on) .in { padding: 30px 18px; }
+      .stamp { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+
+    #modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(13,11,8,.82);
+      backdrop-filter: blur(4px);
+      cursor: pointer;
+    }
+    .modal-box {
+      position: relative;
+      z-index: 1;
+      background: var(--ink2);
+      border: 1px solid var(--line);
+      padding: 36px 32px 32px;
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-box h3 { margin: 0; font-size: clamp(28px,5vw,44px); }
+    .modal-close {
+      position: absolute;
+      top: 14px; right: 16px;
+      background: none;
+      border: none;
+      color: var(--dim);
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px 8px;
+    }
+    .modal-close:hover { color: var(--paper); }
+
+    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+    .field label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+    .field input,
+    .field select,
+    .field textarea {
+      background: var(--ink);
+      border: 1px solid var(--line);
+      color: var(--paper);
+      padding: 10px 14px;
+      font: 14px/1.4 "IBM Plex Mono", monospace;
+      outline: none;
+      resize: vertical;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus { border-color: var(--red); }
+    .field select option { background: var(--ink); }
+    .form-error { color: var(--red); font-size: 12px; min-height: 18px; margin: 0; }
+  </style>
 </head>
 
-<body>
+<body id="top">
 
-  <!-- ══════════════════════════════════════════════════════
-       NAV
-  ══════════════════════════════════════════════════════ -->
   <nav>
-    <b>ARCHIVE©</b>
+    <b>9JA ARCHIVE©</b>
     <div>
       <a href="#rooms">Rooms</a>
       <a href="#timeline">Timeline</a>
@@ -31,20 +358,13 @@
     </div>
   </nav>
 
-
-  <!-- ══════════════════════════════════════════════════════
-       HERO
-  ══════════════════════════════════════════════════════ -->
   <header class="hero">
-
     <div class="stamp">Est. 1960<br>Lagos ✦ Abuja<br>Open always</div>
-
     <h1 class="d">
       <span>The past</span>
       <span class="o">is not</span>
       <span class="r">past.</span>
     </h1>
-
     <div class="row">
       <p class="s">
         A digital museum of Nigerian photography, music, fashion and design.
@@ -52,93 +372,56 @@
       </p>
       <a class="btn" href="#rooms">Enter the collection ↓</a>
     </div>
-
   </header>
 
-  <!-- Marquee ticker -->
   <div class="mq"><div id="mq"></div></div>
 
-
-  <!-- ══════════════════════════════════════════════════════
-       ROOMS
-       Thumbnail URLs use Wikimedia's /thumb/ CDN endpoint:
-       .../commons/thumb/{a}/{ab}/File.jpg/{width}px-File.jpg
-       This avoids the rate-limiting that hits full originals.
-  ══════════════════════════════════════════════════════ -->
   <section id="rooms">
     <span class="tag">Four rooms · One country</span>
     <h2 class="d">Choose a room</h2>
 
     <div class="rooms" id="rm">
 
-      <!-- Room 01 — Photography -->
       <button class="room on" data-k="photo">
-        <img
-          class="art"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/1910s_Lagos_Nigeria_by_H_Hunting_of_Paterson_Zochonis_4554747024_University_of_Toronto.jpg/800px-1910s_Lagos_Nigeria_by_H_Hunting_of_Paterson_Zochonis_4554747024_University_of_Toronto.jpg"
-          alt="Early Lagos street scene, 1910s, Nigeria">
+        <img class="art" src="images/photo-lagos.jpg" alt="Early Lagos street scene, 1910s">
         <span class="n">01</span>
         <div class="in">
           <h3 class="d">Photography</h3>
           <div class="more">
-            <p class="s">
-              Studio portraits, street frames, and J.D. 'Okhai Ojeikere's decades-long
-              catalogue of hairstyles as sculpture. Nigeria has always looked at itself closely.
-            </p>
+            <p class="s">Studio portraits, street frames, and J.D. 'Okhai Ojeikere's decades-long catalogue of hairstyles as sculpture. Nigeria has always looked at itself closely.</p>
           </div>
         </div>
       </button>
 
-      <!-- Room 02 — Music -->
       <button class="room" data-k="music">
-        <img
-          class="art"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/New_Afrika_Shrine%2C_Lagos_Ikeja%2C_Nigeria_1.jpg/800px-New_Afrika_Shrine%2C_Lagos_Ikeja%2C_Nigeria_1.jpg"
-          alt="The New Afrika Shrine, Lagos, Nigeria">
+        <img class="art" src="images/music-shrine.jpg" alt="The New Afrika Shrine, Lagos">
         <span class="n">02</span>
         <div class="in">
           <h3 class="d">Music</h3>
           <div class="more">
-            <p class="s">
-              From highlife dance halls to Fela's Afrika Shrine, juju, fuji and the global
-              rise of Afrobeats. Press play on seventy years of Lagos noise.
-            </p>
+            <p class="s">From highlife dance halls to Fela's Afrika Shrine, juju, fuji and the global rise of Afrobeats. Press play on seventy years of Lagos noise.</p>
           </div>
         </div>
       </button>
 
-      <!-- Room 03 — Fashion -->
       <button class="room" data-k="fashion">
-        <img
-          class="art"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Adire_Selection.jpg/800px-Adire_Selection.jpg"
-          alt="Adire indigo fabric selection, Yoruba, Nigeria">
+        <img class="art" src="images/fashion-adire.jpg" alt="Adire indigo fabric selection, Yoruba, Nigeria">
         <span class="n">03</span>
         <div class="in">
           <h3 class="d">Fashion</h3>
           <div class="more">
-            <p class="s">
-              Adire indigo, aso-oke, and the tailors who made a nation's wardrobe,
-              from Shade Thomas-Fahm's boutique to Lagos runways.
-            </p>
+            <p class="s">Adire indigo, aso-oke, and the tailors who made a nation's wardrobe, from Shade Thomas-Fahm's boutique to Lagos runways.</p>
           </div>
         </div>
       </button>
 
-      <!-- Room 04 — Design -->
       <button class="room" data-k="design">
-        <img
-          class="art"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/The_Magestic_National_theater_Lagos.jpg/800px-The_Magestic_National_theater_Lagos.jpg"
-          alt="The National Theatre, Lagos, Nigeria">
+        <img class="art" src="images/design-theatre.jpg" alt="The National Theatre, Lagos">
         <span class="n">04</span>
         <div class="in">
           <h3 class="d">Design</h3>
           <div class="more">
-            <p class="s">
-              A flag drawn by a student, buildings by Demas Nwoko, posters and typography.
-              Form that argued for the country it came from.
-            </p>
+            <p class="s">A flag drawn by a student, buildings by Demas Nwoko, posters and typography. Form that argued for the country it came from.</p>
           </div>
         </div>
       </button>
@@ -146,10 +429,6 @@
     </div>
   </section>
 
-
-  <!-- ══════════════════════════════════════════════════════
-       TIMELINE
-  ══════════════════════════════════════════════════════ -->
   <section id="timeline" style="background:var(--ink2)">
     <span class="tag">Accession log</span>
     <h2 class="d">Seven decades<br>on the record</h2>
@@ -157,76 +436,58 @@
     <ol class="tl" id="tl"></ol>
   </section>
 
-
-  <!-- ══════════════════════════════════════════════════════
-       PLATES
-  ══════════════════════════════════════════════════════ -->
   <section id="plates">
     <span class="tag">Plates · photographs from the record</span>
     <h2 class="d">From the<br>photo drawer</h2>
 
     <div class="pl">
 
-      <!-- Plate 1 — Independence flag -->
       <figure>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/800px-Flag_of_Nigeria.svg.png"
-          alt="The Nigerian flag — green, white, green — hoisted at independence 1960">
+        <div style="width:100%;height:220px;display:flex;">
+          <div style="flex:1;background:#1f9e57;"></div>
+          <div style="flex:1;background:#efe5cf;"></div>
+          <div style="flex:1;background:#1f9e57;"></div>
+        </div>
         <figcaption>
           <b>The flag goes up</b>
           1 October 1960 — the green-white-green takes the sky at independence.
         </figcaption>
       </figure>
 
-      <!-- Plate 2 — Lagos from above -->
       <figure>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Ikoyi%2C_Lagos%2C_Nigeria.jpg/800px-Ikoyi%2C_Lagos%2C_Nigeria.jpg"
-          alt="Aerial view of Ikoyi, Lagos, Nigeria">
+        <img src="images/plate-lagos.jpg" alt="Aerial view of Ikoyi, Lagos, Nigeria">
         <figcaption>
           <b>Marina, mid-century</b>
           Lagos from above — a city rising fast toward its own future.
         </figcaption>
       </figure>
 
-      <!-- Plate 3 — Fela / Afrika Shrine -->
       <figure>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Fela_New_Shrine%2C_Lagos_02.jpg/800px-Fela_New_Shrine%2C_Lagos_02.jpg"
-          alt="The New Afrika Shrine, Lagos — home of Fela Kuti's Afrobeat">
+        <img src="images/plate-shrine.jpg" alt="The New Afrika Shrine, Lagos">
         <figcaption>
           <b>Horns up at the Shrine</b>
-          The New Afrika Shrine, Lagos — where Fela turned music into resistance.
+          The New Afrika Shrine — where Fela turned music into resistance.
         </figcaption>
       </figure>
 
-      <!-- Plate 4 — Adire cloth -->
       <figure>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Adire_Selection.jpg/800px-Adire_Selection.jpg"
-          alt="Selection of adire indigo-dyed cloth, Yoruba, Nigeria">
+        <img src="images/fashion-adire.jpg" alt="Adire indigo-dyed cloth selection">
         <figcaption>
           <b>The tailor's window</b>
           Adire — indigo resist-dyed cloth that dressed a continent.
         </figcaption>
       </figure>
 
-      <!-- Plate 5 — Nok terracotta -->
       <figure>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Erected_Nok_Terracotta.jpg/800px-Erected_Nok_Terracotta.jpg"
-          alt="Erected Nok terracotta sculpture, Nigeria">
+        <img src="images/plate-nok1.jpg" alt="Erected Nok terracotta sculpture, Nigeria">
         <figcaption>
           <b>Nok head</b>
           Terracotta tradition — over two thousand years of Nigerian sculptural genius.
         </figcaption>
       </figure>
 
-      <!-- Plate 6 — Nok face / hair as architecture -->
       <figure>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Nok_face_sculpture.jpg/800px-Nok_face_sculpture.jpg"
-          alt="Nok face sculpture at the Kaduna museum gallery, Nigeria">
+        <img src="images/plate-nok2.jpg" alt="Nok face sculpture, Kaduna museum, Nigeria">
         <figcaption>
           <b>Hair as architecture</b>
           An homage to the sculptural hairstyles documented across Nigeria by Ojeikere.
@@ -236,15 +497,10 @@
     </div>
 
     <p class="tag" style="margin-top:26px">
-      Images sourced from Wikimedia Commons under free / CC licences.
-      Swap in higher-resolution or licensed photographs as the collection grows.
+      Images: Wikimedia Commons, free / CC licences. Swap in licensed photographs as the collection grows.
     </p>
   </section>
 
-
-  <!-- ══════════════════════════════════════════════════════
-       PULL A RECORD
-  ══════════════════════════════════════════════════════ -->
   <section class="pull" id="pull">
     <span class="tag">Random access</span>
     <h2 class="d" style="margin-bottom:0">Pull a record</h2>
@@ -252,39 +508,203 @@
     <button class="btn" id="pb">Pull another ↻</button>
   </section>
 
-
-  <!-- ══════════════════════════════════════════════════════
-       FOOTER / CONTRIBUTE
-  ══════════════════════════════════════════════════════ -->
   <footer id="give">
-    <span class="tag">Thehttps://www.istockphoto.com/photos/nigerian-history-photos collection is incomplete</span>
-
-    <h2 class="d">
-      Your drawer<br>
-      <span style="color:var(--red)">is an archive.</span>
-    </h2>
-
-    <p class="s" style="font-size:clamp(20px,2.4vw,28px); max-width:640px">
+    <span class="tag">The collection is incomplete</span>
+    <h2 class="d">Your drawer<br><span style="color:var(--red)">is an archive.</span></h2>
+    <p class="s" style="font-size:clamp(20px,2.4vw,28px);max-width:640px">
       Wedding photographs, cassette sleeves, a tailor's pattern book, an old poster.
       Send us what survived and we will keep it for the next generation.
     </p>
-
-    <a class="btn" href="mailto:hello@archive.example?subject=Contribution">
-      Contribute a record
-    </a>
-
+    <button class="btn" id="openContrib">Contribute a record</button>
     <div class="g tag">
-      <span>ARCHIVE© — a fictional museum</span>
+      <span>9JA ARCHIVE© — a digital museum</span>
       <span>Documenting Nigeria's creative history</span>
-      <span><a href="#" onclick="scrollTo({top:0}); return false;">Back to top ↑</a></span>
+      <span><a id="backToTop" href="#top">Back to top ↑</a></span>
     </div>
   </footer>
 
+  <div id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" style="display:none">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-box">
+      <button class="modal-close" id="closeModal" aria-label="Close">✕</button>
+      <h3 class="d" id="modal-title">Contribute a record</h3>
+      <p class="s" style="margin:8px 0 24px;font-size:15px;color:var(--dim)">
+        Tell us about what you have — we'll follow up to arrange a scan or transfer.
+      </p>
+      <form id="contribForm" novalidate>
+        <div class="field">
+          <label for="cf-name">Your name</label>
+          <input id="cf-name" name="name" type="text" placeholder="e.g. Ngozi Adeyemi" required>
+        </div>
+        <div class="field">
+          <label for="cf-email">Email address</label>
+          <input id="cf-email" name="email" type="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+          <label for="cf-cat">Category</label>
+          <select id="cf-cat" name="category">
+            <option value="">— pick one —</option>
+            <option value="photography">Photography</option>
+            <option value="music">Music</option>
+            <option value="fashion">Fashion</option>
+            <option value="design">Design</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="cf-desc">What do you have?</label>
+          <textarea id="cf-desc" name="description" rows="4"
+            placeholder="e.g. A box of studio portraits from Ibadan, 1970s. My grandfather's cassette collection…"
+            required></textarea>
+        </div>
+        <p id="form-error" class="form-error" aria-live="polite"></p>
+        <button type="submit" class="btn" style="width:100%;margin-top:8px">Send it in →</button>
+      </form>
+      <div id="form-success" style="display:none;text-align:center;padding:32px 0">
+        <p style="font-size:32px;margin-bottom:12px">✦</p>
+        <h4 class="d" style="font-size:28px;color:var(--red)">Received.</h4>
+        <p class="s" style="margin-top:12px;color:var(--dim)">We'll be in touch soon. Thank you for keeping the record alive.</p>
+      </div>
+    </div>
+  </div>
 
-  <!-- ══════════════════════════════════════════════════════
-       SCRIPTS
-  ══════════════════════════════════════════════════════ -->
-  <script src="main.js"></script>
+  <script>
+    const CATEGORIES = {
+      photo:   ["Photography", "#ff4a1c"],
+      music:   ["Music",       "#e9b32f"],
+      fashion: ["Fashion",     "#4d86e0"],
+      design:  ["Design",      "#1f9e57"],
+    };
+
+    const ENTRIES = [
+      ["1950s","music",   "Highlife fills the dance halls",     "Bandleaders like Victor Olaiya and Bobby Benson make Lagos nights swing with horns and guitars."],
+      ["1960", "design",  "A flag is raised",                   "Designed by Michael Taiwo Akinkunmi, the green-white-green flag is hoisted at independence on 1 October."],
+      ["1960s","fashion", "The boutique era begins",            "Shade Thomas-Fahm, often credited as a pioneer of Nigerian fashion design, dresses a newly independent city."],
+      ["1968", "photo",   "Hairstyles, one frame at a time",    "J.D. 'Okhai Ojeikere begins photographing women's hairstyles across Nigeria, turning them into a monumental body of work."],
+      ["1970s","music",   "The Shrine and the sound",           "Fela Kuti fuses jazz, highlife and funk into Afrobeat and turns the Afrika Shrine into a stage for dissent."],
+      ["1970s","design",  "Building a new culture",             "Architect and designer Demas Nwoko roots modernism in Nigerian form at the New Culture Studios in Ibadan."],
+      ["1980s","music",   "Juju and fuji go loud",              "King Sunny Adé takes juju abroad while fuji grows in the streets, drums first."],
+      ["2010", "photo",   "LagosPhoto opens",                   "An annual festival gives contemporary photographers a home city audience and a world one."],
+      ["2011", "fashion", "Lagos gets a fashion week",          "Lagos Fashion Week launches, turning local labels into a calendar the world watches."],
+      ["2010s","music",   "Afrobeats leaves home",              "A new generation of artists carries the sound onto global charts and stages."],
+      ["2020s","design",  "ARCHIVE opens",                      "A generation scans, tags and shares what was nearly lost. The past stays on the record."],
+    ];
+
+    document.getElementById("mq").innerHTML =
+      "Photography ✦ Music ✦ Fashion ✦ Design ✦ 1950 → Now ✦ Lagos ✦ Ibadan ✦ Kano ✦ Enugu ✦ Port Harcourt ✦ Abuja ✦ "
+      .repeat(2);
+
+    document.querySelectorAll(".room").forEach(r =>
+      r.addEventListener("click", () => {
+        document.querySelectorAll(".room").forEach(x => x.classList.remove("on"));
+        r.classList.add("on");
+      })
+    );
+
+    const io = new IntersectionObserver(
+      es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("v"); io.unobserve(e.target); } }),
+      { threshold: .15 }
+    );
+
+    let activeFilter = "all";
+
+    function drawTimeline() {
+      document.getElementById("tl").innerHTML = ENTRIES
+        .filter(e => activeFilter === "all" || e[1] === activeFilter)
+        .map(([dec, cat, title, desc]) => `
+          <li>
+            <div class="yr d">${dec}</div>
+            <div><h4>${title}</h4><p>${desc}</p></div>
+            <div class="dis tag"><i style="background:${CATEGORIES[cat][1]}"></i>${CATEGORIES[cat][0]}</div>
+          </li>`)
+        .join("");
+      document.querySelectorAll(".tl li").forEach(li => io.observe(li));
+    }
+
+    document.getElementById("ch").innerHTML =
+      [["all","All"], ...Object.entries(CATEGORIES).map(([k,v]) => [k,v[0]])]
+        .map(([k,l]) => `<button class="chip" data-k="${k}" aria-pressed="${k==="all"}">${l}</button>`)
+        .join("");
+
+    document.getElementById("ch").addEventListener("click", e => {
+      const b = e.target.closest(".chip");
+      if (!b) return;
+      activeFilter = b.dataset.k;
+      document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === b));
+      drawTimeline();
+    });
+
+    drawTimeline();
+
+    let lastIdx = -1;
+    function pull() {
+      let i;
+      do { i = Math.floor(Math.random() * ENTRIES.length); } while (i === lastIdx);
+      lastIdx = i;
+      const [dec, cat, title, desc] = ENTRIES[i];
+      document.getElementById("card").innerHTML = `
+        <span class="tag" style="color:#6b624f">Record No. ${String(i+1).padStart(3,"0")} · ${CATEGORIES[cat][0]}</span>
+        <div class="yr d">${dec}</div>
+        <h4>${title}</h4>
+        <p>${desc}</p>`;
+    }
+    document.getElementById("pb").onclick = pull;
+    pull();
+
+    document.getElementById("backToTop").addEventListener("click", function(e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const modal       = document.getElementById("modal");
+    const openBtn     = document.getElementById("openContrib");
+    const closeBtn    = document.getElementById("closeModal");
+    const backdrop    = document.getElementById("modalBackdrop");
+    const form        = document.getElementById("contribForm");
+    const formError   = document.getElementById("form-error");
+    const formSuccess = document.getElementById("form-success");
+
+    function openModal() {
+      modal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+      closeBtn.focus();
+    }
+
+    function closeModal() {
+      modal.style.display = "none";
+      document.body.style.overflow = "";
+      form.reset();
+      form.style.display = "";
+      formSuccess.style.display = "none";
+      formError.textContent = "";
+    }
+
+    openBtn.addEventListener("click", openModal);
+    closeBtn.addEventListener("click", closeModal);
+    backdrop.addEventListener("click", closeModal);
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape" && modal.style.display === "flex") closeModal();
+    });
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      formError.textContent = "";
+
+      const name  = form.querySelector("#cf-name").value.trim();
+      const email = form.querySelector("#cf-email").value.trim();
+      const desc  = form.querySelector("#cf-desc").value.trim();
+
+      if (!name) { formError.textContent = "Please enter your name."; return; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        formError.textContent = "Please enter a valid email address."; return;
+      }
+      if (!desc) { formError.textContent = "Please describe what you have."; return; }
+
+      form.style.display = "none";
+      formSuccess.style.display = "block";
+    });
+  </script>
 
 </body>
 </html>
